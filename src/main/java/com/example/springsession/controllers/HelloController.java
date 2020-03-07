@@ -17,16 +17,18 @@ public class HelloController {
     @RequestMapping("/cookie")
     public String testCookie(String browser, HttpSession session, HttpServletRequest request) {
         Object browser1 = session.getAttribute("browser");
+        System.out.println("request session:" + request.getRequestedSessionId());
         if (browser1 == null) {
             session.setAttribute("browser", browser);
-            System.out.println("session is not browser, store it " + browser);
+            System.out.println("session id:" + session.getId());
         } else {
-            System.out.println("session has broswer " + browser1);
+            System.out.println("existed id:" + session.getId());
         }
 
         Cookie[] cookies = request.getCookies();
-        for (int i = 0; i < cookies.length; i++) {
+        for (int i = 0; cookies != null && i < cookies.length; i++) {
             cookies[i].getName();
+            System.out.println("cookie name:" + cookies[i].getName() + "; cookie value:" + cookies[i].getValue());
         }
         return browser;
     }
